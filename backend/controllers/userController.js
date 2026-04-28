@@ -229,10 +229,16 @@ const listAppointment = async (req, res) => {
     }
 }
 
-const razorpayInstance = new razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
-})
+const getRazorpayInstance = () => {
+    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+        throw new Error('Razorpay is not configured')
+    }
+
+    return new razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    })
+}
 
 // API to make payment of appointment using razorpay
 const paymentRazorpay = async (req, res) => {
@@ -253,6 +259,7 @@ const paymentRazorpay = async (req, res) => {
         }
 
         // creation of an order
+        const razorpayInstance = getRazorpayInstance()
         const order = await razorpayInstance.orders.create(options)
 
         res.json({ success: true, order })
@@ -267,6 +274,7 @@ const paymentRazorpay = async (req, res) => {
 const verifyRazorpay = async (req, res) => {
     try {
         const { razorpay_order_id } = req.body
+        const razorpayInstance = getRazorpayInstance()
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
         if (orderInfo.status === 'paid') {
