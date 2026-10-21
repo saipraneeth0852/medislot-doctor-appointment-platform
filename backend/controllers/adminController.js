@@ -57,8 +57,12 @@ const addDoctor = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" });
-    const imageUrl = imageUpload.secure_url;
+    // Photo upload needs Cloudinary, which is not configured in this demo: use a neutral placeholder.
+    let imageUrl = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23e0e7ff'/%3E%3Ccircle cx='40' cy='31' r='14' fill='%235f6FFF'/%3E%3Cpath d='M12 76a28 24 0 0 1 56 0z' fill='%235f6FFF'/%3E%3C/svg%3E";
+    if (imageFile && process.env.CLOUDINARY_API_KEY) {
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" });
+      imageUrl = imageUpload.secure_url;
+    }
 
     const doctorData = {
       name,

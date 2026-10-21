@@ -45,7 +45,7 @@ const MyProfile = () => {
                         <img className='w-36 rounded opacity-75' src={image ? URL.createObjectURL(image) : userData.image} alt="" />
                         <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
                     </div>
-                    <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden />
+                    <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden disabled />
                 </label>
             ) : (
                 <img className='w-36 rounded' src={userData.image} alt="" />
