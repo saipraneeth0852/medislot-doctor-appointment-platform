@@ -19,7 +19,7 @@ const Navbar = () => {
   }
 
   const goToUserPanel = () => {
-    window.location.href = 'https://appointy-roan.vercel.app/'
+    window.location.href = import.meta.env.VITE_USER_URL || import.meta.env.BASE_URL.replace(/admin\/$/, '')
   }
 
   const isOnDashboard =

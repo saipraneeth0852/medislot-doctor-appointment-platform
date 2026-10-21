@@ -9,6 +9,9 @@ const authUser = async (req, res, next) => {
     try {
         const token_decode = jwt.verify(token, process.env.JWT_SECRET)
 
+        if (token_decode.role !== 'user') {
+            return res.json({ success: false, message: 'Not Authorized Login Again' })
+        }
         // ✅ Fix: Ensure req.body is defined before assigning to it
         if (!req.body) req.body = {}
 

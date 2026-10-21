@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
 
         const newUser = new userModel(userData)
         const user = await newUser.save()
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+        const token = jwt.sign({ id: user._id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
         res.json({ success: true, token })
 
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (isMatch) {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+            const token = jwt.sign({ id: user._id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' })
             res.json({ success: true, token })
         }
         else {
@@ -259,6 +259,9 @@ const paymentRazorpay = async (req, res) => {
         }
 
         // creation of an order
+        if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+            return res.json({ success: false, message: 'Online payment is disabled in this demo. No payment was made.' })
+        }
         const razorpayInstance = getRazorpayInstance()
         const order = await razorpayInstance.orders.create(options)
 
