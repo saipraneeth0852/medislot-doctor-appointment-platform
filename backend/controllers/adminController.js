@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import jwt from "jsonwebtoken";
 import appointmentModel from "../models/appointmentModel.js";
 import doctorModel from "../models/doctorModel.js";
@@ -6,14 +7,23 @@ import validator from "validator";
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js"
 
+// constant-time string comparison (hashes first so lengths match)
+const safeEqual = (a, b) => {
+    if (typeof a !== 'string' || typeof b !== 'string' || !b) return false
+    const ha = crypto.createHash('sha256').update(a).digest()
+    const hb = crypto.createHash('sha256').update(b).digest()
+    return crypto.timingSafeEqual(ha, hb)
+}
+
 // API for admin login
 const loginAdmin = async (req, res) => {
     try {
 
         const { email, password } = req.body
 
-        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(email + password, process.env.JWT_SECRET)
+        if (safeEqual(email, process.env.ADMIN_EMAIL) && safeEqual(password, process.env.ADMIN_PASSWORD)) {
+            // token carries only a role, never credentials
+            const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '12h' })
             res.json({ success: true, token })
         } else {
             res.json({ success: false, message: "Invalid credentials" })
