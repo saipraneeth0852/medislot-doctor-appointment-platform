@@ -6,6 +6,10 @@ let memoryServer;
 const connectDB = async () => {
   try {
     let mongoUri = process.env.MONGODB_URI;
+    const { MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST } = process.env;
+    if (!mongoUri && MONGODB_USER && MONGODB_PASSWORD && MONGODB_HOST) {
+      mongoUri = `mongodb+srv://${encodeURIComponent(MONGODB_USER)}:${encodeURIComponent(MONGODB_PASSWORD)}@${MONGODB_HOST}/appointy?retryWrites=true&w=majority`;
+    }
     if (!mongoUri) {
       if (process.env.NODE_ENV === 'production') throw new Error('MONGODB_URI is required in production (no in-memory fallback)')
       memoryServer = await MongoMemoryServer.create({
