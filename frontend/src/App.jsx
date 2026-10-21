@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
-    <div className='mx-4 sm:mx-[10%]'>
+    <div className='mx-4 sm:mx-6 lg:mx-10'>
       <ToastContainer />
       <div className='mt-2 rounded bg-amber-100 px-3 py-2 text-center text-xs text-amber-900'>
         Portfolio demo with synthetic doctors. Bookings are not real and online payment is disabled. Please don't enter real medical or personal details.
