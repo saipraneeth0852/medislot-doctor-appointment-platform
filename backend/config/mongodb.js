@@ -14,8 +14,7 @@ const connectDB = async () => {
       console.log("Using in-memory MongoDB for local development");
     }
 
-    const dbUri = mongoUri.endsWith("/appointy") ? mongoUri : `${mongoUri}/appointy`;
-    await mongoose.connect(dbUri);
+    await mongoose.connect(mongoUri, { dbName: "appointy" });
     console.log("Database Connected");
   } catch (error) {
     console.error("Database connection error:", error);
