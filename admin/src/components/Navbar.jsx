@@ -28,18 +28,18 @@ const Navbar = () => {
 
   return (
     <div className='flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white'>
-      <div className='flex items-center gap-3 text-xs'>
+      <div className='flex items-center gap-2 sm:gap-3 text-xs min-w-0'>
 
         {/* Logo */}
         <img
           onClick={() => navigate('/')}
-          className='h-9 sm:h-10 w-auto shrink-0 object-contain cursor-pointer'
+          className='h-7 sm:h-10 w-auto shrink-0 object-contain cursor-pointer'
           src={assets.admin_logo}
           alt="Logo"
         />
 
         {/* Role Label */}
-        <p className='border px-2.5 py-0.5 rounded-full border-gray-500 text-gray-600'>
+        <p className='hidden sm:block border px-2.5 py-0.5 rounded-full border-gray-500 text-gray-600'>
           {aToken ? 'Admin' : 'Doctor'}
         </p>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
         {isOnDashboard && (
           <button
             onClick={goToUserPanel}
-            className='ml-2 text-white bg-primary hover:bg-gray-700 px-3 py-1.5 rounded-full text-xs'
+            className='sm:ml-2 text-white bg-primary hover:bg-gray-700 px-3 py-1.5 rounded-full text-xs'
           >
             User Panel
           </button>
@@ -57,7 +57,7 @@ const Navbar = () => {
       {/* Logout */}
       <button
         onClick={logout}
-        className='bg-primary text-white text-sm px-10 py-2 rounded-full'
+        className='bg-primary text-white text-sm px-4 sm:px-10 py-2 rounded-full shrink-0'
       >
         Logout
       </button>
