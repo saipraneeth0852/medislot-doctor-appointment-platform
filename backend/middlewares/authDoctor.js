@@ -17,6 +17,9 @@ const authDoctor = async (req, res, next) => {
 
         // Verify token and attach user info to req
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.role !== 'doctor') {
+            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+        }
         req.user = { id: decoded.id };
         next();
     } catch (error) {

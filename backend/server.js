@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import rateLimit from 'express-rate-limit'
 import 'dotenv/config'
 import mongoose from 'mongoose'
 import connectDB from './config/mongodb.js'
@@ -19,6 +20,12 @@ connectCloudinary()
 // middlewares
 app.use(express.json())
 app.use(cors({ origin: process.env.FRONTEND_URL || true, credentials: true }))
+
+// throttle credential endpoints (per IP)
+const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false,
+  message: { success: false, message: 'Too many attempts, try again later.' } })
+app.set('trust proxy', 1)
+app.use(['/api/admin/login', '/api/doctor/login', '/api/user/login', '/api/user/register'], loginLimiter)
 
 // api endpoints
 app.use('/api/admin', adminRouter)
