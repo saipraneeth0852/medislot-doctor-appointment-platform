@@ -1,6 +1,8 @@
-# Appointy - Doctor Appointment Web App
+# MediSlot - Doctor Appointment Platform
 
-**Appinty** is a full-stack web application designed to make healthcare more accessible by simplifying the process of booking doctor appointments. It offers three levels of login: **Patient**, **Doctor**, and **Admin**, each with distinct features tailored to their roles. The app integrates **online payment gateways (Stripe and Razorpay)** to facilitate seamless and secure payments. Built using the **MERN stack** (MongoDB, Express.js, React.js, and Node.js), Appointy provides an efficient, user-friendly experience for both patients and healthcare providers.
+> **Note:** Adapted from a doctor-appointment MERN project originally titled "Appointy" (original author not identified in this repo; credit to be added). Modified and rebranded as MediSlot by Sai Praneeth Gowd. Portfolio demo: synthetic doctors, no real bookings, online payment disabled.
+
+**MediSlot** is a full-stack web application designed to make healthcare more accessible by simplifying the process of booking doctor appointments. It offers three levels of login: **Patient**, **Doctor**, and **Admin**, each with distinct features tailored to their roles. The app integrates **online payment gateways (Stripe and Razorpay)** to facilitate seamless and secure payments. Built using the **MERN stack** (MongoDB, Express.js, React.js, and Node.js), Appointy provides an efficient, user-friendly experience for both patients and healthcare providers.
 
 ## 🛠️ Tech Stack
 
@@ -48,7 +50,7 @@
 
 ## 📄 About Page
 
-- Provides information about **Appointy’s vision** and mission.
+- Provides information about **MediSlot’s vision** and mission.
 - **Why Choose Us** section highlights:
   - **Efficiency**: Streamlined appointment process.
   - **Convenience**: Online booking and payment.
